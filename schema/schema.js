@@ -1,8 +1,15 @@
 const graphql = require('graphql');
-const Mod = require('../models/modDBtest');
 const mongoose = require('mongoose');
 
-const { GraphQLObjectType, GraphQLString, GraphQLSchema } = graphql;
+// Models
+const Mod = require('../models/modDBtest');
+const BanPhrase = require('../models/banPhraseDB');
+
+const { GraphQLObjectType, 
+        GraphQLString, 
+        GraphQLSchema, 
+        GraphQLNonNull, 
+        GraphQLList } = graphql;
 
 const ModType = new GraphQLObjectType({
     name: 'Mod',
@@ -11,6 +18,15 @@ const ModType = new GraphQLObjectType({
         serverID:  { type: GraphQLString },
         serverName: { type: GraphQLString },
         modName: { type: GraphQLString }
+    })
+});
+
+const BanPhraseType = new GraphQLObjectType({
+    name: 'BanPhrase',
+    fields: () => ({
+        id: { type: GraphQLString },
+        serverID: { type: GraphQLString },
+        banphrase: { type: GraphQLString }
     })
 });
 
@@ -25,6 +41,15 @@ const RootQuery = new GraphQLObjectType({
                     return res;
                 });
             }
+        },
+        banphrases: {
+            type: new GraphQLList(BanPhraseType),
+            args: { serverID: { type: GraphQLString } },
+            resolve(parent, args) {
+                return BanPhrase.find({serverID: args.serverID}).then(res => {
+                    return res
+                });
+            }
         }
     }
 });
@@ -35,10 +60,10 @@ const Mutation = new GraphQLObjectType({
         addMod: {
             type: ModType,
             args:{
-                id: {type: GraphQLString },
-                serverID: { type: GraphQLString },
-                serverName: { type: GraphQLString },
-                modName: { type: GraphQLString }
+                id: { type: GraphQLString },
+                serverID: { type: new GraphQLNonNull(GraphQLString) },
+                serverName: { type: new GraphQLNonNull(GraphQLString) },
+                modName: { type: new GraphQLNonNull(GraphQLString) }
             },
             resolve(parent, args) {
                 let mod = new Mod({
@@ -56,7 +81,41 @@ const Mutation = new GraphQLObjectType({
                     }
                 }).catch(err => console.log(err));
             }
-        }
+        },
+        addBanPhrase: {
+            type: BanPhraseType,
+            args:{
+                id: { type: GraphQLString },
+                serverID: { type: new GraphQLNonNull(GraphQLString) },
+                banphrase: { type: new GraphQLNonNull(GraphQLString) }
+            },
+            resolve(parent, args) {
+                let bp = new BanPhrase({
+                    _id: mongoose.Types.ObjectId(),
+                    serverID: args.serverID,
+                    banphrase: args.banphrase
+                });
+
+                return BanPhrase.find({ serverID: args.serverID, banphrase: args.banphrase }).then(res => {
+                    if(res.length >= 1) {
+                        return "already exists";
+                    } else {
+                        return bp.save();
+                    }
+                }).catch(err => console.log(err));
+            }
+        },
+        delBanPhrase: {
+            type: BanPhraseType,
+            args:{
+                id: { type: GraphQLString },
+                serverID: { type: new GraphQLNonNull(GraphQLString) },
+                banphrase: { type: new GraphQLNonNull(GraphQLString) }
+            },
+            resolve(parent, args) {
+                return BanPhrase.deleteOne({ serverID: args.serverID, banphrase: args.banphrase }).catch(err => console.log(err));
+            }
+        },
     }
 });
 
