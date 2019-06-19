@@ -4,11 +4,12 @@
   "description": "GraphQL api for cycycybot web dashboard",
   "main": "app.js",
   "scripts": {
-    "start" : "node app.js"
+    "start": "node app.js"
   },
   "author": "cycycy",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "express-graphql": "^0.8.0",
