@@ -4,7 +4,7 @@
   "description": "GraphQL api for cycycybot web dashboard",
   "main": "app.js",
   "scripts": {
-    "start" : "node app.js"
+    "start": "node app.js"
   },
   "author": "cycycy",
   "license": "ISC",
@@ -15,6 +15,7 @@
     "express": "^4.17.1",
     "express-graphql": "^0.8.0",
     "graphql": "^14.3.1",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.5.12",
     "node-fetch": "^2.6.0"
   }

@@ -15,7 +15,6 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/callback', catchAsync(async (req, res) => {
-    console.log(req.query)
     if (!req.query.code) throw new Error('NoCodeProvided');
     const code = req.query.code;
     const creds = btoa(`${CLIENT_ID}:${CLIENT_SECRET}`);
@@ -27,8 +26,8 @@ router.get('/callback', catchAsync(async (req, res) => {
         },
       });
     const json = await response.json();
-    res.header('Authorization', json.access_token);
-    console.log(json.access_token)
+    res.cookie('token', json.access_token);
+    console.log(json)
     res.redirect(`http://localhost:3000/banphrase`);
   }));
 
