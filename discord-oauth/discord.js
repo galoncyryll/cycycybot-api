@@ -2,8 +2,9 @@ const express = require('express');
 
 const router = express.Router();
 
-const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_ID = process.env.CLIENT_IDD;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
+console.log(CLIENT_ID);
 const redirect = encodeURIComponent('http://localhost:5000/api/discord/callback');
 
 const fetch = require('node-fetch');
@@ -27,9 +28,9 @@ router.get('/callback', catchAsync(async (req, res) => {
         },
       });
     const json = await response.json();
-    res.header('Authorization', json.access_token);
-    console.log(json.access_token)
-    res.redirect(`http://localhost:3000/banphrase`);
+    res.cookie('token', json.access_token);
+    console.log(json)
+    res.redirect(`http://localhost:3000`);
   }));
 
 module.exports = router;
