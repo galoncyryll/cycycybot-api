@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 // Models
 const Mod = require('../models/modDBtest');
 const BanPhrase = require('../models/banPhraseDB');
+const Commands = require('../models/customCommandsDB');
 
 const { GraphQLObjectType, 
         GraphQLString, 
@@ -30,6 +31,17 @@ const BanPhraseType = new GraphQLObjectType({
     })
 });
 
+const CustomCommandsType = new GraphQLObjectType({
+    name: 'CustomCommands',
+    fields: () => ({
+        id: { type: GraphQLString },
+        serverID: { type: GraphQLString },
+        serverName: { type: GraphQLString },
+        commandName: { type: GraphQLString },
+        commandRes: { type: GraphQLString },
+    })
+})
+
 const RootQuery = new GraphQLObjectType({
     name: 'RootQueryType',
     fields: {
@@ -37,18 +49,27 @@ const RootQuery = new GraphQLObjectType({
             type: ModType,
             args: { serverID: { type: GraphQLString } },
             resolve(parent, args){
-                return Mod.findOne({serverID: args.serverID}).then(res => {
+                return Mod.findOne({ serverID: args.serverID }).then(res => {
                     return res;
-                });
+                })
             }
         },
         banphrases: {
             type: new GraphQLList(BanPhraseType),
             args: { serverID: { type: GraphQLString } },
             resolve(parent, args) {
-                return BanPhrase.find({serverID: args.serverID}).then(res => {
+                return BanPhrase.find({ serverID: args.serverID }).then(res => {
                     return res
-                });
+                })
+            }
+        },
+        customcommands: {
+            type: new GraphQLList(CustomCommandsType),
+            args: { serverID: { type: GraphQLString } },
+            resolve(parent, args) {
+                return Commands.find({ serverID: args.serverID }).then(res => {
+                    return res;
+                })
             }
         }
     }
