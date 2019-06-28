@@ -4,7 +4,6 @@ const schema = require('./schema/schema');
 const mongoose = require('mongoose');
 const bodyparser = require('body-parser');
 require('dotenv').config();
-const cors = require('cors');
 
 const app = express();
 
