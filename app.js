@@ -3,10 +3,10 @@ const graphqlHTTP = require('express-graphql');
 const schema = require('./schema/schema');
 const mongoose = require('mongoose');
 const bodyparser = require('body-parser');
+const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
-
 
 //allow cors
 app.use(cors());
@@ -30,7 +30,6 @@ app.use('/api/discord', require('./discord-oauth/discord'));
 app.listen(5000, () => {
     console.log('Listening on port 5000...');
 });
-
 
 app.use((err, req, res, next) => {
     switch (err.message) {

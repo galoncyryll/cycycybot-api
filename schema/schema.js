@@ -1,77 +1,23 @@
 const graphql = require('graphql');
 const mongoose = require('mongoose');
 
-// Models
-const Mod = require('../models/modDBtest');
-const BanPhrase = require('../models/banPhraseDB');
-const Commands = require('../models/customCommandsDB');
+// types
+const { ModType, mod } = require('./modtype/modtype');
+const { BanPhraseType, banphrases } = require('./banphrasetype/banphrasetype');
+const { CustomCommandsType, customcommands } = require('./customcommandtype/customcommandtype');
 
 const { GraphQLObjectType, 
         GraphQLString, 
         GraphQLSchema, 
-        GraphQLNonNull, 
-        GraphQLList } = graphql;
-
-const ModType = new GraphQLObjectType({
-    name: 'Mod',
-    fields: () => ({
-        id: { type: GraphQLString },
-        serverID:  { type: GraphQLString },
-        serverName: { type: GraphQLString },
-        modName: { type: GraphQLString }
-    })
-});
-
-const BanPhraseType = new GraphQLObjectType({
-    name: 'BanPhrase',
-    fields: () => ({
-        id: { type: GraphQLString },
-        serverID: { type: GraphQLString },
-        banphrase: { type: GraphQLString }
-    })
-});
-
-const CustomCommandsType = new GraphQLObjectType({
-    name: 'CustomCommands',
-    fields: () => ({
-        id: { type: GraphQLString },
-        serverID: { type: GraphQLString },
-        serverName: { type: GraphQLString },
-        commandName: { type: GraphQLString },
-        commandRes: { type: GraphQLString },
-    })
-})
+        GraphQLNonNull 
+    } = graphql;
 
 const RootQuery = new GraphQLObjectType({
     name: 'RootQueryType',
     fields: {
-        mod: {
-            type: ModType,
-            args: { serverID: { type: GraphQLString } },
-            resolve(parent, args){
-                return Mod.findOne({ serverID: args.serverID }).then(res => {
-                    return res;
-                })
-            }
-        },
-        banphrases: {
-            type: new GraphQLList(BanPhraseType),
-            args: { serverID: { type: GraphQLString } },
-            resolve(parent, args) {
-                return BanPhrase.find({ serverID: args.serverID }).then(res => {
-                    return res
-                })
-            }
-        },
-        customcommands: {
-            type: new GraphQLList(CustomCommandsType),
-            args: { serverID: { type: GraphQLString } },
-            resolve(parent, args) {
-                return Commands.find({ serverID: args.serverID }).then(res => {
-                    return res;
-                })
-            }
-        }
+        mod,
+        banphrases,
+        customcommands
     }
 });
 
@@ -100,7 +46,7 @@ const Mutation = new GraphQLObjectType({
                     } else {
                         return mod.save();
                     }
-                }).catch(err => console.log(err));
+                })
             }
         },
         addBanPhrase: {
@@ -123,7 +69,7 @@ const Mutation = new GraphQLObjectType({
                     } else {
                         return bp.save();
                     }
-                }).catch(err => console.log(err));
+                })
             }
         },
         delBanPhrase: {
@@ -134,7 +80,7 @@ const Mutation = new GraphQLObjectType({
                 banphrase: { type: new GraphQLNonNull(GraphQLString) }
             },
             resolve(parent, args) {
-                return BanPhrase.deleteOne({ serverID: args.serverID, banphrase: args.banphrase }).catch(err => console.log(err));
+                return BanPhrase.deleteOne({ serverID: args.serverID, banphrase: args.banphrase });
             }
         },
     }
