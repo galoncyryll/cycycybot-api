@@ -1,16 +1,16 @@
 const graphql = require('graphql');
-const Mod = require('../../../models/modDBtest');
+const ModDB = require('../../models/modDBtest');
 
 const { GraphQLString } = graphql;
 
 // modtype
-const { ModType } = require('../../types/modtype');
+const { ModType } = require('../types/modType');
 
 const mod = {
   type: ModType,
   args: { serverID: { type: GraphQLString } },
   resolve(parent, args) {
-    return Mod.findOne({ serverID: args.serverID }).then(res => res);
+    return ModDB.findOne({ serverID: args.serverID }).then(res => res);
   },
 };
 

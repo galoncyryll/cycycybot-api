@@ -1,6 +1,6 @@
 const graphql = require('graphql');
 const mongoose = require('mongoose');
-const BanPhrase = require('../../../models/banPhraseDB');
+const BanPhrase = require('../../models/banPhraseDB');
 
 const {
   GraphQLString,
@@ -8,7 +8,7 @@ const {
 } = graphql;
 
 // banphrase type
-const { BanPhraseType } = require('../../types/banphrasetype');
+const { BanPhraseType } = require('../types/banPhraseType');
 
 const addbanphrase = {
   type: BanPhraseType,

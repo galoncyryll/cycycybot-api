@@ -1,13 +1,13 @@
 const graphql = require('graphql');
 
 // queries
-const { mod } = require('./queries/modquery/modquery');
-const { banphrases } = require('./queries/banphrasequery/banphrasequery');
-const { customcommands } = require('./queries/customcommandquery/customcommandquery');
+const { mod } = require('./queries/modQuery');
+const { banphrases } = require('./queries/banPhraseQuery');
+const { customcommands } = require('./queries/customCommandQuery');
 
 // mutations
-const { addmod } = require('./mutations/addmod/addmod');
-const { addbanphrase, delbanphrase } = require('./mutations/addbanphrase/addbanphrase');
+const { addmod } = require('./mutations/addDelMod');
+const { addbanphrase, delbanphrase } = require('./mutations/addBanPhrase');
 
 const {
   GraphQLObjectType,

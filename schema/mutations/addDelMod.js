@@ -1,6 +1,6 @@
 const graphql = require('graphql');
 const mongoose = require('mongoose');
-const Mod = require('../../../models/modDBtest');
+const Mod = require('../../models/modDBtest');
 
 const {
   GraphQLString,
@@ -8,7 +8,7 @@ const {
 } = graphql;
 
 // mod type
-const { ModType } = require('../../types/modtype');
+const { ModType } = require('../types/modType');
 
 const addmod = {
   type: ModType,

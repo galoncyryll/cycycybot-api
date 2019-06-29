@@ -1,5 +1,5 @@
 const graphql = require('graphql');
-const BanPhrase = require('../../../models/banPhraseDB');
+const BanPhrase = require('../../models/banPhraseDB');
 
 const {
   GraphQLString,
@@ -7,7 +7,7 @@ const {
 } = graphql;
 
 // banphrase type
-const { BanPhraseType } = require('../../types/banphrasetype');
+const { BanPhraseType } = require('../types/banPhraseType');
 
 const banphrases = {
   type: new GraphQLList(BanPhraseType),
