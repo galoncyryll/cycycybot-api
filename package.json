@@ -9,6 +9,7 @@
   "author": "cycycy",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "btoa": "^1.2.1",
     "cors": "^2.8.5",
     "dotenv": "^8.0.0",
@@ -18,5 +19,10 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.5.12",
     "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.18.0"
   }
 }
