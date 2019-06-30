@@ -41,7 +41,7 @@ const delbanphrase = {
     banphrase: { type: new GraphQLNonNull(GraphQLString) },
   },
   resolve(parent, args) {
-    return BanPhrase.deleteOne({ serverID: args.serverID, banphrase: args.banphrase });
+    return BanPhrase.deleteOne({ serverID: args.serverID, banphrase: args.banphrase }).then(deleted => deleted);
   },
 };
 

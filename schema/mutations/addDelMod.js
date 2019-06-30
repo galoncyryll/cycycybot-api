@@ -35,6 +35,18 @@ const addmod = {
   },
 };
 
+const delmod = {
+  type: ModType,
+  args: {
+    id: { type: GraphQLString },
+    serverID: { type: new GraphQLNonNull(GraphQLString) },
+  },
+  resolve(parent, args) {
+    return Mod.deleteOne({ serverID: args.serverID });
+  },
+};
+
 module.exports = {
   addmod,
+  delmod,
 };
