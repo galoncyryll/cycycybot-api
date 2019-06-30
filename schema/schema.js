@@ -9,7 +9,7 @@ const { customcommands } = require('./queries/customCommandQuery');
 const { addMod, delMod } = require('./mutations/addDelMod');
 const { addBanPhrase, delBanPhrase } = require('./mutations/addDelBanPhrase');
 const { enableLogger, disableLogger } = require('./mutations/setLogger');
-const { addCmd } = require('./mutations/addDelCmd');
+const { addCmd, delCmd, editCmd } = require('./mutations/addDelCmd');
 
 const {
   GraphQLObjectType,
@@ -29,6 +29,8 @@ const Mutation = new GraphQLObjectType({
   name: 'MutationType',
   fields: {
     addCmd,
+    delCmd,
+    editCmd,
     addMod,
     delMod,
     addBanPhrase,

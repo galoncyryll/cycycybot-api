@@ -37,6 +37,33 @@ const addCmd = {
   },
 };
 
+const delCmd = {
+  type: CustomCommandsType,
+  args: {
+    serverID: { type: new GraphQLNonNull(GraphQLString) },
+    commandName: { type: new GraphQLNonNull(GraphQLString) },
+  },
+  resolve(parent, args) {
+    return Cmd.deleteOne({ serverID: args.serverID, commandName: args.commandName });
+  },
+};
+
+const editCmd = {
+  type: CustomCommandsType,
+  args: {
+    serverID: { type: new GraphQLNonNull(GraphQLString) },
+    commandName: { type: new GraphQLNonNull(GraphQLString) },
+  },
+  resolve(parent, args) {
+    return Cmd.updateOne(
+      { serverID: args.serverID, commandName: args.commandName },
+      { commandRes: args.commandRes },
+    );
+  },
+};
+
 module.exports = {
   addCmd,
+  delCmd,
+  editCmd,
 };
