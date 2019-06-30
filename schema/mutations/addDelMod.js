@@ -10,7 +10,7 @@ const {
 // mod type
 const { ModType } = require('../types/modType');
 
-const addmod = {
+const addMod = {
   type: ModType,
   args: {
     id: { type: GraphQLString },
@@ -27,15 +27,13 @@ const addmod = {
     });
 
     return Mod.find({ serverID: args.serverID }).then((res) => {
-      if (res.length >= 1) {
-        return 'already added';
-      }
+      if (res.length >= 1) throw new Error('Mod already exists in the server');
       return mod.save();
     });
   },
 };
 
-const delmod = {
+const delMod = {
   type: ModType,
   args: {
     id: { type: GraphQLString },
@@ -47,6 +45,6 @@ const delmod = {
 };
 
 module.exports = {
-  addmod,
-  delmod,
+  addMod,
+  delMod,
 };

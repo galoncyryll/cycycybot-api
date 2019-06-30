@@ -47,7 +47,6 @@ const disableLogger = {
     id: { type: GraphQLString },
     serverID: { type: GraphQLNonNull(GraphQLString) },
     isEnabled: { type: GraphQLNonNull(GraphQLString) },
-    logChannelID: { type: GraphQLNonNull(GraphQLString) },
   },
   resolve(parent, args) {
     LoggerDB.findOne({ serverID: args.serverID }).then((res) => {

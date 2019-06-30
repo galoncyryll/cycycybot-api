@@ -6,9 +6,10 @@ const { banphrases } = require('./queries/banPhraseQuery');
 const { customcommands } = require('./queries/customCommandQuery');
 
 // mutations
-const { addmod, delmod } = require('./mutations/addDelMod');
-const { addbanphrase, delbanphrase } = require('./mutations/addDelBanPhrase');
-const { enableLogger } = require('./mutations/setLogger');
+const { addMod, delMod } = require('./mutations/addDelMod');
+const { addBanPhrase, delBanPhrase } = require('./mutations/addDelBanPhrase');
+const { enableLogger, disableLogger } = require('./mutations/setLogger');
+const { addCmd } = require('./mutations/addDelCmd');
 
 const {
   GraphQLObjectType,
@@ -27,11 +28,13 @@ const RootQuery = new GraphQLObjectType({
 const Mutation = new GraphQLObjectType({
   name: 'MutationType',
   fields: {
-    addmod,
-    delmod,
-    addbanphrase,
-    delbanphrase,
+    addCmd,
+    addMod,
+    delMod,
+    addBanPhrase,
+    delBanPhrase,
     enableLogger,
+    disableLogger,
   },
 });
 

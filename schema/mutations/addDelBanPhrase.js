@@ -10,7 +10,7 @@ const {
 // banphrase type
 const { BanPhraseType } = require('../types/banPhraseType');
 
-const addbanphrase = {
+const addBanPhrase = {
   type: BanPhraseType,
   args: {
     id: { type: GraphQLString },
@@ -25,15 +25,13 @@ const addbanphrase = {
     });
 
     return BanPhrase.find({ serverID: args.serverID, banphrase: args.banphrase }).then((res) => {
-      if (res.length >= 1) {
-        return 'already exists';
-      }
+      if (res.length >= 1) throw new Error('Ban Phrase already exists');
       return bp.save();
     });
   },
 };
 
-const delbanphrase = {
+const delBanPhrase = {
   type: BanPhraseType,
   args: {
     id: { type: GraphQLString },
@@ -46,6 +44,6 @@ const delbanphrase = {
 };
 
 module.exports = {
-  addbanphrase,
-  delbanphrase,
+  addBanPhrase,
+  delBanPhrase,
 };
