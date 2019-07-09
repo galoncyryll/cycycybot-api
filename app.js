@@ -31,7 +31,7 @@ app.listen(5000, () => {
   console.log('Listening on port 5000...');
 });
 
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
   switch (err.message) {
     case 'NoCodeProvided':
       return res.status(400).send({

@@ -18,6 +18,7 @@ const {
 
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
+  description: 'Root query for grabbing data',
   fields: {
     mod,
     banphrases,
@@ -27,6 +28,7 @@ const RootQuery = new GraphQLObjectType({
 
 const Mutation = new GraphQLObjectType({
   name: 'MutationType',
+  description: 'Root mutation query for mutating data',
   fields: {
     addCmd,
     delCmd,
