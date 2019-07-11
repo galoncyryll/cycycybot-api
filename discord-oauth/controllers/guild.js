@@ -1,8 +1,10 @@
 const { BOT_TOKEN } = process.env;
 
-const getGuilds = (req, res, fetch) => {
+const getGuild = (req, res, fetch) => {
+  const { serverId } = req.params;
   const { token } = req.body;
 
+  console.log(serverId);
   const fetchUserGuilds = fetch('https://discordapp.com/api/users/@me/guilds', {
     method: 'get',
     headers: {
@@ -25,7 +27,7 @@ const getGuilds = (req, res, fetch) => {
   })
     .then(apiRes => apiRes.json());
 
-  return Promise.all([fetchUserGuilds, fetchBotGuilds])
+  Promise.all([fetchUserGuilds, fetchBotGuilds])
     .then(([user, bot]) => {
       user.map((userGuilds) => {
         bot.map((botGuilds) => {
@@ -36,9 +38,18 @@ const getGuilds = (req, res, fetch) => {
       });
       return user;
     })
-    .then(guilds => res.status(200).json(guilds));
+    .then((guilds) => {
+      const filteredGuild = guilds.filter(guild => guild.id === serverId);
+      if (filteredGuild[0].bot) {
+        return res.status(200).json(filteredGuild[0]);
+      }
+      return res.status(500).json({
+        error: 'bot not in server',
+        bot: false,
+      });
+    });
 };
 
 module.exports = {
-  getGuilds,
+  getGuild,
 };

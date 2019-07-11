@@ -13,6 +13,7 @@ const { catchAsync } = require('../utils');
 // controllers
 const login = require('./controllers/login');
 const guilds = require('./controllers/guilds');
+const guild = require('./controllers/guild');
 
 router.get('/login', (req, res) => {
   login.handleLogin(req, res);
@@ -20,6 +21,10 @@ router.get('/login', (req, res) => {
 
 router.post('/getguilds', (req, res) => {
   guilds.getGuilds(req, res, fetch);
+});
+
+router.post('/getguilds/:serverId', (req, res) => {
+  guild.getGuild(req, res, fetch);
 });
 
 router.get('/callback', catchAsync(async (req, res) => {
