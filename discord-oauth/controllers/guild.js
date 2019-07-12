@@ -4,7 +4,6 @@ const getGuild = (req, res, fetch) => {
   const { serverId } = req.params;
   const { token } = req.body;
 
-  console.log(serverId);
   const fetchUserGuilds = fetch('https://discordapp.com/api/users/@me/guilds', {
     method: 'get',
     headers: {
@@ -47,7 +46,10 @@ const getGuild = (req, res, fetch) => {
         error: 'bot not in server',
         bot: false,
       });
-    });
+    })
+    .catch(() => res.status(404).json({
+      error: 'Server not found',
+    }));
 };
 
 module.exports = {

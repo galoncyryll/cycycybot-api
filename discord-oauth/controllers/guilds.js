@@ -36,7 +36,10 @@ const getGuilds = (req, res, fetch) => {
       });
       return user;
     })
-    .then(guilds => res.status(200).json(guilds));
+    .then(guilds => res.status(200).json(guilds))
+    .catch(() => res.status(404).json({
+      error: 'Error',
+    }));
 };
 
 module.exports = {
